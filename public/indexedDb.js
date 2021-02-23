@@ -1,20 +1,19 @@
-const thing =
-  window.indexedDB ||
-  window.mozIndexedDB ||
-  window.webkitIndexedDB ||
-  window.msIndexedDB ||
-  window.shimIndexedDB;
-​
+// const thing =
+//   window.indexedDB ||
+//   window.mozIndexedDB ||
+//   window.webkitIndexedDB ||
+//   window.msIndexedDB ||
+//   window.shimIndexedDB;
 let db;
-const request = thing.open("budget", 1);
+const request = indexedDB.open("budget", 1);
 ​
-request.onupgradeneeded = ({ target }) => {
-  let db = target.result;
+request.onupgradeneeded = function (event) {
+  let db = event.target.result;
   db.createObjectStore("pending", { autoIncrement: true });
 };
 ​
-request.onsuccess = ({ target }) => {
-  db = target.result;
+request.onsuccess = function (event) {
+  db = event.target.result;
 ​
   // check if app is online before reading from db
   if (navigator.onLine) {
@@ -46,11 +45,9 @@ function checkDatabase() {
         headers: {
           Accept: "application/json, text/plain, */*",
           "Content-Type": "application/json"
-        }
+        },
       })
-      .then(response => {        
-        return response.json();
-      })
+      .then(response =>response.json())
       .then(() => {
         // delete records if successful
         const transaction = db.transaction(["pending"], "readwrite");
