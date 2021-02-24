@@ -10,7 +10,8 @@ I created this application so that users can keep track of their budget whether 
  
 ## Screenshots
 
-![screenshot of application](/public/images/Screenshot.png)
+![screenshot](/public/images/Screenshot.png)
+
 
 
 ## Features
